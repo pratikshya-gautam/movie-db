@@ -1,9 +1,14 @@
-import { Button } from '@mui/material';
+import { Route, Routes } from 'react-router';
+import { SearchMovie } from './pages/search-movies';
+import { SearchResult } from './pages/search-result';
 
 export function App() {
   return (
     <div>
-      <Button variant="contained">primary</Button>
+      <Routes>
+        <Route path="/" element={<SearchMovie />} />
+        <Route path="/movies/:keyword" element={<SearchResult />} />
+      </Routes>
     </div>
   );
 }
