@@ -7,15 +7,24 @@ import {
   CardActions,
   Tooltip,
 } from '@mui/material';
+import fallBackPoster from '../assets/image.png';
+
+function getPosterUrl(posterPath, size = 'w500') {
+  if (posterPath === null) {
+    return fallBackPoster;
+  }
+  const baseUrl = 'https://image.tmdb.org/t/p/';
+  return `${baseUrl}${size}${posterPath}`;
+}
 
 export function MovieCard({ movie }) {
   return (
     <Card sx={{ maxWidth: 240, maxHeight: 500, minHeight: 500 }}>
       <CardMedia
         component="img"
-        alt="green iguana"
+        alt={movie.title}
         height="340px"
-        image={movie.Poster}
+        image={getPosterUrl(movie.poster_path)}
       />
       <CardContent>
         <Tooltip title={movie.title}>
@@ -29,13 +38,13 @@ export function MovieCard({ movie }) {
               whiteSpace: 'nowrap',
             }}
           >
-            {movie.Title}
+            {movie.title}
           </Typography>
         </Tooltip>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          Year: {movie.Year}
+          Release Date: {movie.release_date}
           <br />
-          Type: {movie.Type}
+          Rating: {movie.vote_average}
         </Typography>
       </CardContent>
       <CardActions>

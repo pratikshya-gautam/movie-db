@@ -5,30 +5,34 @@ import {
   Divider,
   TextField,
   Grid2,
-  Link,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Colors } from '../theme';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { searchMovie } from '../api/movies-api';
+import { searchMovie } from '../api/tmdb-api.js';
 import { MovieCard } from '../components/movie-card';
+import { Genres } from '../components/genres';
+import { useNavigate } from 'react-router';
 
 export function SearchResult() {
   let { keyword: url } = useParams();
   const [keyword, setKeyword] = useState(url);
+
+  const [allMovies, setAllMovies] = useState([]);
   const [movies, setMovies] = useState([]);
+  const [genreId, setGenreId] = useState(null);
+
+  const navigate = useNavigate();
 
   async function search(t) {
     const result = await searchMovie(t);
-    setMovies(result.Search);
+    setAllMovies(result.results);
   }
 
-  useEffect(() => {
-    search(url);
-  }, [url]);
-
-  console.log(movies);
+  function handleGenresChange(id) {
+    setGenreId(id ? parseInt(id, 10) : null);
+  }
 
   function handleChange(event) {
     setKeyword(event.target.value);
@@ -36,9 +40,24 @@ export function SearchResult() {
 
   function handleKeyUp(event) {
     if (event.keyCode === 13) {
-      search(keyword);
+      navigate(`/movies/${keyword}`);
     }
   }
+
+  useEffect(() => {
+    search(url);
+  }, [url]);
+
+  useEffect(() => {
+    if (!genreId) {
+      setMovies(allMovies);
+    } else {
+      const filtered = allMovies.filter((m) => {
+        return m.genre_ids.includes(genreId);
+      });
+      setMovies(filtered);
+    }
+  }, [allMovies, genreId]);
 
   return (
     <>
@@ -66,49 +85,10 @@ export function SearchResult() {
           />
         </Box>
       </Container>
+
       <Container sx={{ marginTop: '20px', marginBottom: '20px' }}>
         <Grid2 container spacing={2}>
-          <Grid2>
-            <Link href="" underline="none" color="secondary">
-              All
-            </Link>
-          </Grid2>
-          <Grid2>
-            <Link href="" underline="none" color="secondary">
-              Image
-            </Link>
-          </Grid2>
-          <Grid2>
-            <Link href="" underline="none" color="secondary">
-              Video
-            </Link>
-          </Grid2>
-          <Grid2>
-            <Link href="" underline="none" color="secondary">
-              News
-            </Link>
-          </Grid2>
-          <Grid2>
-            <Link href="" underline="none" color="secondary">
-              Web
-            </Link>
-          </Grid2>
-          <Grid2>
-            <Link href="" underline="none" color="secondary">
-              Books
-            </Link>
-          </Grid2>
-          <Grid2>
-            <Link href="" underline="none" color="secondary">
-              Finance
-            </Link>
-          </Grid2>
-          <Grid2>
-            {' '}
-            <Link href="" underline="none" color="secondary">
-              Tools
-            </Link>
-          </Grid2>
+          <Genres onGenresChange={handleGenresChange} genreId={genreId} />
         </Grid2>
       </Container>
       <Divider></Divider>
