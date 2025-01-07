@@ -9,6 +9,7 @@ export function App() {
       <Routes>
         <Route path="/" element={<SearchMovie />} />
         <Route path="/movies/:keyword" element={<SearchResult />} />
+        {/* id is called params in url */}
         <Route path="/movie-details/:id" element={<MovieDetails />} />
       </Routes>
     </div>

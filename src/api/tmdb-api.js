@@ -33,3 +33,17 @@ export async function getGenres() {
     console.error(error);
   }
 }
+
+export async function getMovieDetails(id) {
+  const url = `${BASE_URL}/movie/${id}`;
+  try {
+    const response = await axios.get(url, {
+      params: {
+        api_key: API_KEY,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
