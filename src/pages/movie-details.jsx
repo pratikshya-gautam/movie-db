@@ -2,7 +2,7 @@ import { Rating, Grid2, Paper, Typography, Box, Badge } from '@mui/material';
 import { getPosterUrl } from '../shared/get-poster-url';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
-const sample = {
+const movie = {
   adult: false,
   backdrop_path: '/lKsHyNJFr47Pgz3uxnnMqDU1bx0.jpg',
   genre_ids: [18, 53, 10770],
@@ -20,7 +20,29 @@ const sample = {
   vote_count: 171,
 };
 
-export function MovieDetails({ movie = sample }) {
+/*
+  TODO: 
+
+  Get a movie id and read it.
+    - use useParams (mathi ko :id dincha)
+    - example: search-result ko line 19 ma herne. 
+
+  Make a new function: getMovieDetails: 
+   - api/tmdb-api.js ma naya function create garne.
+
+  Use this(getMovieDetails) function:
+   - useEffect banune.
+   - useEffect -> ()=>{loadDetails(id), [id]}
+   - src/pages/search-movies.jsx -> 49-51 line
+
+  make loadDetails
+  - getMovieDetails -> call
+  - result -> useState should store the results.
+  - src/pages/search-movies.jsx -> 28-33 line
+  
+ */
+
+export function MovieDetails() {
   return (
     <Grid2 container spacing={2} margin={5}>
       <Grid2 size={3}>

@@ -9,7 +9,7 @@ export function App() {
       <Routes>
         <Route path="/" element={<SearchMovie />} />
         <Route path="/movies/:keyword" element={<SearchResult />} />
-        <Route path="/movies-details/:id" element={<MovieDetails />} />
+        <Route path="/movie-details/:id" element={<MovieDetails />} />
       </Routes>
     </div>
   );

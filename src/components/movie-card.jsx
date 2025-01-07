@@ -40,7 +40,15 @@ export function MovieCard({ movie }) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        {/* 
+        TODO: Add onClick handler. Use react-router hook called 
+        useNavigate -> navigate(/movies/id) 
+        Read More: https://reactrouter.com/start/library/navigating#usenavigate
+        Result: when clicking on Learn More -> movies/id and id should id of a movie.
+        */}
+        <Button id={movie.id} size="small">
+          Learn More
+        </Button>
       </CardActions>
     </Card>
   );
