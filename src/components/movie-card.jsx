@@ -8,8 +8,17 @@ import {
   Tooltip,
 } from '@mui/material';
 import { getPosterUrl } from '../shared/get-poster-url';
+import { useNavigate } from 'react-router';
 
 export function MovieCard({ movie }) {
+  const navigate = useNavigate();
+
+  function handleClick(event) {
+    const id = event.target.id;
+    const target = `/movie-details/${id}`;
+    navigate(target);
+  }
+
   return (
     <Card sx={{ maxWidth: 240, maxHeight: 500, minHeight: 500 }}>
       <CardMedia
@@ -40,13 +49,7 @@ export function MovieCard({ movie }) {
         </Typography>
       </CardContent>
       <CardActions>
-        {/* 
-        TODO: Add onClick handler. Use react-router hook called 
-        useNavigate -> navigate(/movies/id) 
-        Read More: https://reactrouter.com/start/library/navigating#usenavigate
-        Result: when clicking on Learn More -> movies/id and id should id of a movie.
-        */}
-        <Button id={movie.id} size="small">
+        <Button onClick={handleClick} id={movie.id} size="small">
           Learn More
         </Button>
       </CardActions>
