@@ -32,14 +32,17 @@ export function MovieDetails() {
 
   return (
     <Paper sx={{ margin: 3, padding: 5 }} elevation={5}>
-      <Grid2 container columnSpacing={2}>
+      <Grid2 container columnSpacing={4}>
         <Grid2 size={{ md: 4, sx: 12 }} alignSelf="center">
           <Box>
-            <img
-              height={520}
-              width={350}
+            <Box
+              component="img"
               src={getPosterUrl(movie.poster_path)}
-              alt=""
+              sx={{
+                width: '100%',
+                maxWidth: '100%', // Ensure it doesn't exceed its container's width
+                height: 'auto', // Maintain aspect ratio
+              }}
             />
           </Box>
         </Grid2>
