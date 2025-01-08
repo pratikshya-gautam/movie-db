@@ -31,10 +31,10 @@ export function MovieDetails() {
   }
 
   return (
-    <Paper sx={{ margin: 3, padding: 5, paddingLeft: 0 }} elevation={5}>
+    <Paper sx={{ margin: 3, padding: 5 }} elevation={5}>
       <Grid2 container columnSpacing={2}>
         <Grid2 size={{ md: 4, sx: 12 }} alignSelf="center">
-          <Box sx={{ textAlign: 'center' }}>
+          <Box>
             <img
               height={520}
               width={350}
