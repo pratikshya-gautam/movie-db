@@ -98,7 +98,12 @@ export function SearchResult() {
       <Container sx={{ marginTop: '30px' }}>
         <Grid2 container spacing={5}>
           {movies.map((movie) => (
-            <Grid2 key={movie.Title}>
+            <Grid2
+              size={{ sx: 12, md: 3 }}
+              alignSelf={'center'}
+              justifySelf={'center'}
+              key={movie.id}
+            >
               <MovieCard movie={{ ...movie }} />
             </Grid2>
           ))}

@@ -6,11 +6,13 @@ import {
   Button,
   CardActions,
   Tooltip,
+  useTheme,
 } from '@mui/material';
 import { getPosterUrl } from '../shared/get-poster-url';
 import { useNavigate } from 'react-router';
 
 export function MovieCard({ movie }) {
+  const theme = useTheme();
   const navigate = useNavigate();
 
   function handleClick(event) {
@@ -20,11 +22,29 @@ export function MovieCard({ movie }) {
   }
 
   return (
-    <Card sx={{ maxWidth: 240, maxHeight: 500, minHeight: 500 }}>
+    <Card
+      sx={{
+        [theme.breakpoints.up('sm')]: {
+          maxHeight: 500,
+          minHeight: 500,
+        },
+        [theme.breakpoints.down('sm')]: {
+          width: 390,
+          minHeight: 500,
+        },
+      }}
+    >
       <CardMedia
         component="img"
         alt={movie.title}
-        height="340px"
+        sx={{
+          [theme.breakpoints.up('sm')]: {
+            height: '340px',
+          },
+          [theme.breakpoints.down('sm')]: {
+            height: '420px',
+          },
+        }}
         image={getPosterUrl(movie.poster_path)}
       />
       <CardContent>
