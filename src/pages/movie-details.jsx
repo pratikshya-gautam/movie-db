@@ -30,11 +30,10 @@ export function MovieDetails() {
     return null;
   }
 
-  console.log(movie);
   return (
     <Paper sx={{ margin: 3, padding: 5, paddingLeft: 0 }} elevation={5}>
       <Grid2 container columnSpacing={2}>
-        <Grid2 size={4} alignSelf="center">
+        <Grid2 size={{ md: 4, sx: 12 }} alignSelf="center">
           <Box sx={{ textAlign: 'center' }}>
             <img
               height={520}
@@ -44,7 +43,7 @@ export function MovieDetails() {
             />
           </Box>
         </Grid2>
-        <Grid2 size={8}>
+        <Grid2 size={{ md: 8, sx: 12 }}>
           <Typography variant="h4">{movie.title}</Typography>
 
           <Typography
