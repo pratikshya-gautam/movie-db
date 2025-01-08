@@ -1,9 +1,10 @@
 import {
-  Box,
+  Container,
   Typography,
-  Stack,
   InputAdornment,
   TextField,
+  Grid2,
+  useTheme,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Colors } from '../theme';
@@ -11,6 +12,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
 export function SearchMovie() {
+  const theme = useTheme();
   const navigate = useNavigate();
   const [keyword, setKeyword] = useState('');
 
@@ -24,18 +26,26 @@ export function SearchMovie() {
     }
   }
   return (
-    <Box
-      height={'60vh'}
-      display={'flex'}
-      alignItems={'center'}
-      justifyContent={'center'}
-      margin={'100px'}
-    >
-      <Box flex={1}>
-        <Stack spacing={2}>
+    <Container height={'60vh'} sx={{ marginTop: '30vh' }}>
+      <Grid2 container flexDirection={'column'}>
+        <Grid2
+          size={{ xs: 10, md: 12 }}
+          alignSelf={'center'}
+          sx={{
+            [theme.breakpoints.down('sm')]: {
+              marginBottom: 1,
+            },
+            [theme.breakpoints.up('sm')]: {
+              marginBottom: 3,
+            },
+          }}
+        >
           <Typography color="primary" textAlign={'center'} variant="h3">
             Search Movie
           </Typography>
+        </Grid2>
+
+        <Grid2 size={{ xs: 10, md: 12 }} alignSelf={'center'}>
           <TextField
             fullWidth
             onKeyUp={handleKeyUp}
@@ -55,8 +65,8 @@ export function SearchMovie() {
               },
             }}
           />
-        </Stack>
-      </Box>
-    </Box>
+        </Grid2>
+      </Grid2>
+    </Container>
   );
 }
