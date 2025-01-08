@@ -52,6 +52,7 @@ export function SearchMovie() {
             onChange={handleChange}
             value={keyword}
             placeholder="Enter the movie name"
+            helperText="...made with ❤️ in Berlin by Pratikshya Gautam"
             slotProps={{
               input: {
                 sx: { borderRadius: 50 },
