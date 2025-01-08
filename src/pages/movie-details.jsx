@@ -1,31 +1,17 @@
-import { Rating, Grid2, Paper, Typography, Box, Badge } from '@mui/material';
+import {
+  Rating,
+  Grid2,
+  Paper,
+  Typography,
+  Box,
+  Chip,
+  Stack,
+} from '@mui/material';
 import { getPosterUrl } from '../shared/get-poster-url';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import { getMovieDetails } from '../api/tmdb-api';
-
-/*
-  TODO: 
-
-  Get a movie id and read it.
-    - use useParams (mathi ko :id dincha)
-    - example: search-result ko line 19 ma herne. 
-
-  Make a new function: getMovieDetails: 
-   - api/tmdb-api.js ma naya function create garne.
-
-  Use this(getMovieDetails) function:
-   - useEffect banune.
-   - useEffect -> ()=>{loadDetails(id), [id]}
-   - src/pages/search-movies.jsx -> 49-51 line
-
-  make loadDetails
-  - getMovieDetails -> call
-  - result -> useState should store the results.
-  - src/pages/search-movies.jsx -> 28-33 line
-  
- */
 
 export function MovieDetails() {
   const { id } = useParams();
@@ -44,15 +30,21 @@ export function MovieDetails() {
     return null;
   }
 
+  console.log(movie);
   return (
-    <Grid2 container spacing={2} margin={5}>
-      <Grid2 size={3}>
-        <Paper sx={{ textAlign: 'center' }}>
-          <img height={450} src={getPosterUrl(movie.poster_path)} alt="" />
-        </Paper>
-      </Grid2>
-      <Grid2 size={9}>
-        <Paper sx={{ padding: 5 }}>
+    <Paper sx={{ margin: 3, padding: 5, paddingLeft: 0 }} elevation={5}>
+      <Grid2 container columnSpacing={2}>
+        <Grid2 size={4} alignSelf="center">
+          <Box sx={{ textAlign: 'center' }}>
+            <img
+              height={520}
+              width={350}
+              src={getPosterUrl(movie.poster_path)}
+              alt=""
+            />
+          </Box>
+        </Grid2>
+        <Grid2 size={8}>
           <Typography variant="h4">{movie.title}</Typography>
 
           <Typography
@@ -61,27 +53,83 @@ export function MovieDetails() {
           >
             {movie.overview}
           </Typography>
-          <Box component="span" paddingLeft={3} paddingBottom={10}>
-            <Badge color="info" badgeContent={'Action'} />
+          <Box paddingBottom={4}>
+            <Stack spacing={1} direction={'row'}>
+              {movie.genres.map((genre) => (
+                <Chip
+                  key={genre.id}
+                  variant="outlined"
+                  color="info"
+                  label={genre.name}
+                />
+              ))}
+            </Stack>
           </Box>
-          <Typography>
-            <strong>Release Date: </strong>
-            {movie.release_date}{' '}
-          </Typography>
-          <Typography>
-            <strong>Rating: </strong>
-            <Rating
-              readOnly
-              defaultValue={parseInt(movie.popularity, 10) / 2}
-              precision={0.5}
-            />
-          </Typography>
-          <Typography>
-            <strong style={{ verticalAlign: 'middle' }}>Vote Count: </strong>
-            <ThumbUpIcon sx={{ verticalAlign: 'bottom' }} /> {movie.vote_count}
-          </Typography>
-        </Paper>
+
+          <Stack direction="column" spacing={1.25} marginBottom={5}>
+            <Typography>
+              <strong> Status: </strong>
+              {movie.status}
+            </Typography>
+
+            <Typography>
+              <strong>Release Date: </strong>
+              {movie.release_date}{' '}
+            </Typography>
+
+            <Typography>
+              <strong> Orginal Language: </strong>
+              {movie.original_language}
+            </Typography>
+
+            {movie.tagline && (
+              <Typography>
+                <strong> Tagline: </strong>
+                {movie.tagline}
+              </Typography>
+            )}
+
+            <Typography>
+              <strong>Production Companies: </strong>
+              <Typography component={'span'}>
+                {movie.production_companies.map((c) => c.name).join(', ')}
+              </Typography>
+            </Typography>
+
+            <Typography>
+              <strong>Production Countries: </strong>
+              {movie.production_countries.map((countrie) => (
+                <Typography key={countrie.name} component={'span'}>
+                  {' '}
+                  {countrie.name}
+                </Typography>
+              ))}
+            </Typography>
+
+            <Typography>
+              <strong> Runtime: </strong>
+              {movie.runtime}
+            </Typography>
+
+            {/* Vote Count */}
+            <Typography>
+              <strong style={{ verticalAlign: 'middle' }}>Vote Count: </strong>
+              <ThumbUpIcon sx={{ verticalAlign: 'bottom' }} />{' '}
+              {movie.vote_count}
+            </Typography>
+
+            {/* Rating */}
+            <Typography>
+              <strong>Rating: </strong>
+              <Rating
+                readOnly
+                defaultValue={parseInt(movie.popularity, 10) / 2}
+                precision={0.5}
+              />
+            </Typography>
+          </Stack>
+        </Grid2>
       </Grid2>
-    </Grid2>
+    </Paper>
   );
 }
