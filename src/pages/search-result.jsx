@@ -28,8 +28,6 @@ export function SearchResult() {
   async function search(t) {
     const result = await searchMovie(t);
     setAllMovies(result.results);
-
-    console.log(result);
   }
 
   function handleGenresChange(id) {
