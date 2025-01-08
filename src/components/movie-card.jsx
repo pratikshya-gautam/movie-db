@@ -37,17 +37,12 @@ export function MovieCard({ movie }) {
       <CardMedia
         component="img"
         alt={movie.title}
-        sx={{
-          [theme.breakpoints.up('sm')]: {
-            height: '340px',
-            maxWidth: '100%',
-          },
-          [theme.breakpoints.down('sm')]: {
-            height: '420px',
-            maxWidth: '100%',
-          },
-        }}
         image={getPosterUrl(movie.poster_path)}
+        sx={{
+          width: '100%', // Make the image take the full width of its container
+          maxWidth: '100%', // Ensure it doesn't exceed its container's width
+          height: 'auto', // Maintain aspect ratio
+        }}
       />
       <CardContent>
         <Tooltip title={movie.title}>
