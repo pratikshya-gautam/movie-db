@@ -29,7 +29,7 @@ export function MovieCard({ movie }) {
           minHeight: 500,
         },
         [theme.breakpoints.down('sm')]: {
-          width: 390,
+          width: 340,
           minHeight: 500,
         },
       }}
