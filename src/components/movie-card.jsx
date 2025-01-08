@@ -40,9 +40,11 @@ export function MovieCard({ movie }) {
         sx={{
           [theme.breakpoints.up('sm')]: {
             height: '340px',
+            maxWidth: '100%',
           },
           [theme.breakpoints.down('sm')]: {
             height: '420px',
+            maxWidth: '100%',
           },
         }}
         image={getPosterUrl(movie.poster_path)}
