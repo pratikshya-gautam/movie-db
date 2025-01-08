@@ -70,6 +70,7 @@ export function SearchResult() {
             onChange={handleChange}
             placeholder="Enter the movie name"
             variant="outlined"
+            helperText="...made with ❤️ in Berlin by Pratikshya Gautam"
             slotProps={{
               input: {
                 sx: { borderRadius: '50px' },
