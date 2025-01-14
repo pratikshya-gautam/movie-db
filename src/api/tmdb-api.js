@@ -2,7 +2,7 @@ import axios from 'axios';
 const API_KEY = 'cba7f63ec5ee33a844885dbd299dd266';
 const BASE_URL = 'https://api.themoviedb.org/3';
 
-export async function searchMovie(keyword) {
+export async function searchMovie(keyword, page = 1) {
   const url = `${BASE_URL}/search/movie`;
   try {
     const response = await axios.get(url, {
@@ -10,7 +10,7 @@ export async function searchMovie(keyword) {
         api_key: API_KEY,
         query: keyword,
         language: 'en-US',
-        page: 1,
+        page: page,
       },
     });
     return response.data;

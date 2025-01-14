@@ -1,15 +1,18 @@
 import {
   Container,
-  Typography,
+  Box,
   InputAdornment,
   TextField,
   Grid2,
   useTheme,
+  Button,
+  Stack,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Colors } from '../theme';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import logo from '../assets/logo.png';
 
 export function SearchMovie() {
   const theme = useTheme();
@@ -18,6 +21,10 @@ export function SearchMovie() {
 
   function handleChange(event) {
     setKeyword(event.target.value);
+  }
+
+  function handleSearch() {
+    navigate(`/movies/${keyword}`);
   }
 
   async function handleKeyUp(event) {
@@ -40,9 +47,14 @@ export function SearchMovie() {
             },
           }}
         >
-          <Typography color="primary" textAlign={'center'} variant="h3">
-            Search Movie
-          </Typography>
+          <Stack alignItems={'center'}>
+            <Box
+              component="img"
+              sx={{ width: 200 }}
+              src={logo}
+              alt="movie search"
+            />
+          </Stack>
         </Grid2>
 
         <Grid2 size={{ xs: 10, md: 12 }} alignSelf={'center'}>
@@ -61,6 +73,17 @@ export function SearchMovie() {
                     <SearchIcon
                       sx={{ fontSize: '30px', color: Colors.primary }}
                     />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Button
+                      onClick={handleSearch}
+                      sx={{ borderRadius: 10 }}
+                      variant="contained"
+                    >
+                      Search
+                    </Button>
                   </InputAdornment>
                 ),
               },

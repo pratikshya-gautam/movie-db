@@ -5,29 +5,38 @@ import {
   Divider,
   TextField,
   Grid2,
+  Button,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Colors } from '../theme';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams, useSearchParams } from 'react-router';
 import { searchMovie } from '../api/tmdb-api.js';
 import { MovieCard } from '../components/movie-card';
 import { Genres } from '../components/genres';
 import { useNavigate } from 'react-router';
+import { Pagination } from '../components/pagination.jsx';
+import logo from '../assets/logo.png';
 
 export function SearchResult() {
   let { keyword: url } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [keyword, setKeyword] = useState(url);
 
   const [allMovies, setAllMovies] = useState([]);
+  const [count, setCount] = useState(10);
+
   const [movies, setMovies] = useState([]);
   const [genreId, setGenreId] = useState(null);
+  const [pageNumber, setPageNumber] = useState(searchParams.get('page'));
 
   const navigate = useNavigate();
 
-  async function search(t) {
-    const result = await searchMovie(t);
+  async function search(t, pageNumber = 1) {
+    const result = await searchMovie(t, pageNumber);
+    console.log(result);
     setAllMovies(result.results);
+    setCount(result.total_pages);
   }
 
   function handleGenresChange(id) {
@@ -43,10 +52,18 @@ export function SearchResult() {
       navigate(`/movies/${keyword}`);
     }
   }
+  function handleSearch() {
+    navigate(`/movies/${keyword}`);
+  }
+
+  function handlePageNumberChange(number) {
+    setPageNumber(number);
+    setSearchParams({ page: number });
+  }
 
   useEffect(() => {
-    search(url);
-  }, [url]);
+    search(url, pageNumber);
+  }, [url, pageNumber]);
 
   useEffect(() => {
     if (!genreId) {
@@ -61,8 +78,26 @@ export function SearchResult() {
 
   return (
     <>
-      <Container display={'flex'}>
-        <Box flex={1} marginTop={'50px'} marginBottom={'20px'}>
+      <Grid2
+        container
+        sx={{
+          marginLeft: 8,
+          marginRight: 8,
+          marginTop: 5,
+        }}
+      >
+        <Grid2 size={{ xs: 12, md: 2 }}>
+          <Box
+            sx={{
+              width: 150,
+              marginLeft: 3,
+            }}
+            component={'img'}
+            alt="movie search"
+            src={logo}
+          />
+        </Grid2>
+        <Grid2 size={{ xs: 12, md: 10 }}>
           <TextField
             fullWidth
             value={keyword}
@@ -81,11 +116,22 @@ export function SearchResult() {
                     />
                   </InputAdornment>
                 ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Button
+                      onClick={handleSearch}
+                      sx={{ borderRadius: 10 }}
+                      variant="contained"
+                    >
+                      Go
+                    </Button>
+                  </InputAdornment>
+                ),
               },
             }}
           />
-        </Box>
-      </Container>
+        </Grid2>
+      </Grid2>
 
       <Container sx={{ marginTop: '20px', marginBottom: '20px' }}>
         <Grid2 container spacing={2}>
@@ -98,7 +144,7 @@ export function SearchResult() {
         <Grid2 container spacing={5}>
           {movies.map((movie) => (
             <Grid2
-              size={{ sx: 12, md: 3 }}
+              size={{ xs: 12, md: 3 }}
               alignSelf={'center'}
               justifySelf={'center'}
               key={movie.id}
@@ -108,6 +154,11 @@ export function SearchResult() {
           ))}
         </Grid2>
       </Container>
+      <Pagination
+        page={pageNumber}
+        count={count}
+        handlePageNumberChange={handlePageNumberChange}
+      />
     </>
   );
 }

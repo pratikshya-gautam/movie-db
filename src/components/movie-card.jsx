@@ -26,11 +26,11 @@ export function MovieCard({ movie }) {
       sx={{
         [theme.breakpoints.up('sm')]: {
           maxHeight: 500,
-          minHeight: 500,
+          minHeight: 550,
         },
         [theme.breakpoints.down('sm')]: {
           width: 340,
-          minHeight: 500,
+          minHeight: 550,
         },
       }}
     >
