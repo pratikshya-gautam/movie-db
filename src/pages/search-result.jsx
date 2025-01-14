@@ -6,7 +6,6 @@ import {
   TextField,
   Grid2,
   Button,
-  Paper,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Colors } from '../theme';
