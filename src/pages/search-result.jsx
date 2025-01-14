@@ -6,6 +6,7 @@ import {
   TextField,
   Grid2,
   Button,
+  Paper,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Colors } from '../theme';
@@ -78,69 +79,84 @@ export function SearchResult() {
 
   return (
     <>
-      <Grid2
-        container
+      {/* Header */}
+      <Box
         sx={{
-          marginLeft: 8,
-          marginRight: 8,
-          marginTop: 5,
+          position: 'fixed',
+          top: 0,
+          zIndex: 100,
+          width: '100%',
+          paddingTop: 3,
+          backgroundColor: '#ffffff',
         }}
       >
-        <Grid2 size={{ xs: 12, md: 2 }}>
-          <Box
-            sx={{
-              width: 150,
-              marginLeft: 3,
-            }}
-            component={'img'}
-            alt="movie search"
-            src={logo}
-          />
+        {/* Search Input & Logo */}
+        <Grid2
+          container
+          sx={{
+            marginLeft: 8,
+            marginRight: 8,
+          }}
+        >
+          <Grid2 size={{ xs: 12, md: 2 }}>
+            <Box
+              onClick={() => navigate('/')}
+              sx={{
+                width: 150,
+                marginLeft: 3,
+              }}
+              component={'img'}
+              alt="movie search"
+              src={logo}
+            />
+          </Grid2>
+          <Grid2 size={{ xs: 12, md: 10 }}>
+            <TextField
+              fullWidth
+              value={keyword}
+              onKeyUp={handleKeyUp}
+              onChange={handleChange}
+              placeholder="Enter the movie name"
+              variant="outlined"
+              helperText="...made with ❤️ in Berlin by Pratikshya Gautam"
+              slotProps={{
+                input: {
+                  sx: { borderRadius: '50px' },
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon
+                        sx={{ fontSize: '30px', color: Colors.primary }}
+                      />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Button
+                        onClick={handleSearch}
+                        sx={{ borderRadius: 10 }}
+                        variant="contained"
+                      >
+                        Go
+                      </Button>
+                    </InputAdornment>
+                  ),
+                },
+              }}
+            />
+          </Grid2>
         </Grid2>
-        <Grid2 size={{ xs: 12, md: 10 }}>
-          <TextField
-            fullWidth
-            value={keyword}
-            onKeyUp={handleKeyUp}
-            onChange={handleChange}
-            placeholder="Enter the movie name"
-            variant="outlined"
-            helperText="...made with ❤️ in Berlin by Pratikshya Gautam"
-            slotProps={{
-              input: {
-                sx: { borderRadius: '50px' },
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon
-                      sx={{ fontSize: '30px', color: Colors.primary }}
-                    />
-                  </InputAdornment>
-                ),
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Button
-                      onClick={handleSearch}
-                      sx={{ borderRadius: 10 }}
-                      variant="contained"
-                    >
-                      Go
-                    </Button>
-                  </InputAdornment>
-                ),
-              },
-            }}
-          />
-        </Grid2>
-      </Grid2>
 
-      <Container sx={{ marginTop: '20px', marginBottom: '20px' }}>
-        <Grid2 container spacing={2}>
-          <Genres onGenresChange={handleGenresChange} genreId={genreId} />
-        </Grid2>
-      </Container>
-      <Divider></Divider>
+        {/* Catagories */}
+        <Container sx={{ paddingTop: '20px', marginBottom: '20px' }}>
+          <Grid2 container spacing={2}>
+            <Genres onGenresChange={handleGenresChange} genreId={genreId} />
+          </Grid2>
+        </Container>
+        <Divider></Divider>
+      </Box>
 
-      <Container sx={{ marginTop: '30px' }}>
+      {/* Search Result */}
+      <Container sx={{ marginTop: '200px' }}>
         <Grid2 container spacing={5}>
           {movies.map((movie) => (
             <Grid2
@@ -154,6 +170,8 @@ export function SearchResult() {
           ))}
         </Grid2>
       </Container>
+
+      {/* Pagination */}
       <Pagination
         page={pageNumber}
         count={count}
